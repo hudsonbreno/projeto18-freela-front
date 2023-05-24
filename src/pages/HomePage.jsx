@@ -3,7 +3,8 @@ import styled from "styled-components"
 export default function HomePage(){
     return(
         <Page>
-        VALEU LEOZERA
+            <h1>Viagens Alucinantes</h1>
+        
         </Page>
     )
 }
