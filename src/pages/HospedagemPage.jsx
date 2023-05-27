@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export default function HotelPage(){
+export default function HospedagemPage(){
     return(
         <PageHotel>
             <p>Nome do Hotel</p>

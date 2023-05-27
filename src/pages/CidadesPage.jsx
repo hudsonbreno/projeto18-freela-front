@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export default function CidadesPage() {
+export default function CidadesPage({setPage}) {
+
+  setPage(false)
   return (
     <PageCidades>
       <BarraCidade>
@@ -13,7 +15,7 @@ export default function CidadesPage() {
         </div>
       </BarraCidade>
 
-      <p class="cidadesFamosas">Cidades Famosas</p>
+      <p className="cidadesFamosas">Cidades Famosas</p>
       <Cidades>
         <Card>
           <img src="" alt="" />

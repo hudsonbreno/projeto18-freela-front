@@ -1,10 +1,12 @@
-import styled from "styled-components";
-//import Home from "../style/Home.PNG"
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function HomePage() {
+export default function HomePage({setPage, page}) {
   const [card, setCard] = useState("1.Escolha a cidade que deseja visitar");
-  //    const [ buttonClick, setButtonClick ] = useState(false)
+  const [buttonClick, setButtonClick] = useState("flex");
+
+  console.log(page)
 
   function trocarCard() {
     if (card === "1.Escolha a cidade que deseja visitar") {
@@ -14,35 +16,26 @@ export default function HomePage() {
       setCard(
         "3. Veja os locais aonde você pode se hospedar e todo o conforto que eles oferecem!"
       );
+      setButtonClick("none");
     }
-    if (
-      card ===
-      "3. Veja os locais aonde você pode se hospedar e todo o conforto que eles oferecem!"
-    ) {
-      setCard("agora");
-    }
+
   }
   return (
     <PageHome>
-      <Card>
+      <Card buttonClick={buttonClick}>
         <p> {card} </p>
-        <button onClick={trocarCard}></button>
+        <button onClick={trocarCard} >Avançar</button>
+        <Link to="/cidades" >Escolha a cidadeadsadsadsadsada</Link>
       </Card>
     </PageHome>
   );
 }
 
-/* <select>
-<option value="">Selecione</option>
-<option value="Belo_Horizonte">Belo Horizonte</option>
-<option value="Sao_Paulo">São Paulo</option>
-</select> */
-
 const PageHome = styled.div`
   color: red;
   height: 850px;
   display: flex;
-  align-items: end;
+  align-items: center;
 
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
@@ -50,8 +43,7 @@ const PageHome = styled.div`
 const Card = styled.div`
   width: 335px;
   height: 211px;
-  border-top-left-radius: 32px;
-  border-top-right-radius: 32px;
+  border-radius: 32px;
   background-color: rgb(255, 255, 255, 0.5);
   border: 4px gray solid;
   display: flex;
@@ -71,11 +63,17 @@ const Card = styled.div`
     color: #000000;
     padding-bottom: 12px;
   }
-  button{
+  button {
+    display: ${props => props.buttonClick};
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: 30px;
     left: 105px;
     width: 120px;
     height: 40px;
+  }
+  a{
+    display: ${props => props.buttonClick=="flex"? "none":"flex" };
   }
 `;

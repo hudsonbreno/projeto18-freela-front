@@ -1,45 +1,42 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import HomePage from "./pages/HomePage.jsx";
 import CidadesPage from "./pages/CidadesPage.jsx";
 import HoteisPage from "./pages/HoteisPage.jsx";
 import PassagensPage from "./pages/PassagensPage.jsx";
-import HotelPage from "./pages/HotelPage.jsx";
+import HospedagemPage from "./pages/HospedagemPage.jsx";
+import Footer from "./components/Footer.jsx";
+import styled from "styled-components";
 import Logo from "./style/logo.png";
 import Home from "./style/Home.PNG";
 import Cidades from "./style/Cidades.PNG";
-import styled from "styled-components";
+
 
 export default function App() {
+  const [ page, setPage ] = useState(true)
+
   return (
-    <Page>
+    <Page page={ page }>
       <Banner>
         <img src={Logo} alt="" />
       </Banner>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cidades" element={<CidadesPage />} />
-          <Route path="/:id_cidade/hosteis" element={<HoteisPage />} />
+          <Route path="/" element={<HomePage page={ page } setPage={ setPage } />} />
+          <Route path="/cidades" element={<CidadesPage setPage={ setPage }/>} />
+          <Route path="/hosteis" element={<HoteisPage />} />
           <Route path="/passagens" element={<PassagensPage />} />
-          <Route path="/" element={<HotelPage />}></Route>
+          <Route path="/hospedagem" element={<HospedagemPage />}></Route>
         </Routes>
       </BrowserRouter>
-
-      <Footer>
-        <img src="iconeHome" alt="Home" />
-        <img src="iconePassagens" alt="Passagens" />
-        <img src="iconePesquisar" alt="Pesquisar" />
-        <img src="iconeHoteis" alt="Hoteis" />
-        <img src="iconeFinalizar" alt="Finalizar"/>
-      </Footer>
+      <Footer page={ page }/>
     </Page>
   );
 }
 
 const Page = styled.div`
   height: 800px;
-  background-image: url(${Cidades});
-  background-image: url(${Cidades});
+  background-image: url(${props => props.page?Home:Cidades});
   background-repeat: no-repeat;
   background-size: 100% 102%;
   height: 800px;
@@ -61,19 +58,4 @@ const Banner = styled.div`
     height: 79px;
     width: 89px;
   }
-`;
-
-const Footer = styled.div`
-  height: 94px;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  background-color: beige;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  background-color: black;
 `;
