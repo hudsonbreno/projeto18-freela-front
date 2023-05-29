@@ -5,38 +5,67 @@ import CidadesPage from "./pages/CidadesPage.jsx";
 import HoteisPage from "./pages/HoteisPage.jsx";
 import PassagensPage from "./pages/PassagensPage.jsx";
 import HospedagemPage from "./pages/HospedagemPage.jsx";
-import Footer from "./components/Footer.jsx";
 import styled from "styled-components";
-import Logo from "./style/logo.png";
 import Home from "./style/Home.PNG";
 import Cidades from "./style/Cidades.PNG";
-
+import conta from "./style/icone/conta.png";
+import hotel from "./style/icone/hotel.png";
+import webHouse from "./style/icone/web-house.png";
+import cidadeIcone from "./style/icone/cidade.png"
+import Banner from "./components/Banner.jsx"
 
 export default function App() {
-  const [ page, setPage ] = useState(true)
+  const [page, setPage] = useState("true");
+  const [lista, setLista] = useState([]);
+  const [cidade, setCidade] = useState("");
 
   return (
-    <Page page={ page }>
-      <Banner>
-        <img src={Logo} alt="" />
-      </Banner>
+    <Page page={page}>
+      <Banner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage page={ page } setPage={ setPage } />} />
-          <Route path="/cidades" element={<CidadesPage setPage={ setPage }/>} />
-          <Route path="/hosteis" element={<HoteisPage />} />
-          <Route path="/passagens" element={<PassagensPage />} />
+          <Route
+            path="/"
+            element={
+              <HomePage/>
+            }
+          />
+          <Route
+            path="/cidades"
+            element={
+              <CidadesPage
+                setPage={setPage}
+                lista={lista}
+                setLista={setLista}
+                cidade={cidade}
+                setCidade={setCidade}
+              />
+            }
+          />
+          <Route
+            path="/hosteis"
+            element={<HoteisPage lista={lista} cidade={cidade} />}
+          />
+          <Route
+            path="/passagens"
+            element={<PassagensPage cidade={cidade} />}
+          />
           <Route path="/hospedagem" element={<HospedagemPage />}></Route>
         </Routes>
       </BrowserRouter>
-      <Footer page={ page }/>
+      <Footer>
+        <img src={webHouse} alt="Home" />
+        <img src={cidadeIcone} alt="Cidades" />
+        <img src={hotel} alt="Hoteis" />
+        <img src={conta} alt="Finalizar" />
+      </Footer>
     </Page>
   );
 }
 
 const Page = styled.div`
   height: 800px;
-  background-image: url(${props => props.page?Home:Cidades});
+  background-image: url(${(props) => (props.page==="true" ? Home : Cidades)});
   background-repeat: no-repeat;
   background-size: 100% 102%;
   height: 800px;
@@ -45,17 +74,22 @@ const Page = styled.div`
   align-items: center;
 `;
 
-const Banner = styled.div`
-  display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom-left-radius: 32px 32px;
-  border-bottom-right-radius: 32px 32px;
-  justify-content: center;
-  background-color: #ffffff;
+
+
+const Footer = styled.div`
+  display: ${(props) => (props.page ? "none" : "flex")};
+  height: 94px;
+  position: absolute;
+  bottom: 0px;
   width: 100%;
+  background-color: beige;
+  align-items: center;
+  justify-content: space-around;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  background-color: #5dafc6;
   img {
-    height: 79px;
-    width: 89px;
+    width: 28px;
+    height: 28px;
   }
 `;

@@ -1,12 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function HomePage({setPage, page}) {
+export default function HomePage() {
   const [card, setCard] = useState("1.Escolha a cidade que deseja visitar");
   const [buttonClick, setButtonClick] = useState("flex");
 
-  console.log(page)
 
   function trocarCard() {
     if (card === "1.Escolha a cidade que deseja visitar") {
@@ -25,7 +24,7 @@ export default function HomePage({setPage, page}) {
       <Card buttonClick={buttonClick}>
         <p> {card} </p>
         <button onClick={trocarCard} >Avançar</button>
-        <Link to="/cidades" >Escolha a cidadeadsadsadsadsada</Link>
+        <Link to="/cidades" >Escolha a cidade</Link>
       </Card>
     </PageHome>
   );
@@ -74,6 +73,6 @@ const Card = styled.div`
     height: 40px;
   }
   a{
-    display: ${props => props.buttonClick=="flex"? "none":"flex" };
+    display: ${props => props.buttonClick==="flex"? "none":"flex" };
   }
 `;
