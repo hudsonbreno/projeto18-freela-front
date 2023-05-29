@@ -18,6 +18,7 @@ const Banner = styled.div`
   justify-content: center;
   background-color: #ffffff;
   width: 100%;
+  max-width: 360px;
   img {
     height: 79px;
     width: 89px;

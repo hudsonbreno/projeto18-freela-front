@@ -11,16 +11,14 @@ import salvador from "../style/cidades/salvador.PNG";
 
 export default function CidadesPage({
   setPage,
-  lista,
-  setLista,
-  setCidade,
-  cidade,
+  setDadosPassagem
 }) {
   setPage("false");
-  const [selecionarCidade, setSelecionarCidade] = useState("Todas");
-  const [cardCidade, setCardCidade] = useState([]);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100000);
+  const [ selecionarCidade, setSelecionarCidade ] = useState("Todas");
+  const [ cardCidade, setCardCidade ] = useState([]);
+  const [ lista, setLista ] = useState([])
+  const [ min, setMin ] = useState(0);
+  const [ max, setMax ] = useState(100000);
 
   useEffect(() => {
     try {
@@ -69,10 +67,6 @@ export default function CidadesPage({
     } catch (err) {
       console.log(err.message);
     }
-  }
-
-  function salvarOpcao(item) {
-    console.log(item);
   }
 
   function imagemCidade(cidade) {
@@ -203,7 +197,7 @@ export default function CidadesPage({
           return (
             <Card key={index}>
               <Link to="/passagens">
-                <button value={item} onClick={() => salvarOpcao(item)}>
+                <button value={item} onClick={()=>setDadosPassagem(item)}>
                   <img src={imagemCidade(item.cidadeDestino)} />
                   <h1>{transformarHora(item.horarioPartida)}</h1>
                   <h2>{item.preco}</h2>
@@ -286,7 +280,6 @@ const BarraCidade = styled.div`
 
 const Cidades = styled.div`
   display: flex;
-  margin-left: 30px;
   overflow-x: scroll;
 `;
 const Card = styled.div`
@@ -325,6 +318,8 @@ const Card = styled.div`
 const Filtro = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   h1 {
     padding-left: 20px;
     padding-right: 10px;
@@ -357,6 +352,10 @@ const Filtro = styled.div`
 
   .digitar input {
     width: 100px;
+  }
+  button{
+    width: 150px;
+    background-color: white;
   }
 `;
 

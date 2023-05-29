@@ -11,61 +11,50 @@ import Cidades from "./style/Cidades.PNG";
 import conta from "./style/icone/conta.png";
 import hotel from "./style/icone/hotel.png";
 import webHouse from "./style/icone/web-house.png";
-import cidadeIcone from "./style/icone/cidade.png"
-import Banner from "./components/Banner.jsx"
+import cidadeIcone from "./style/icone/cidade.png";
+import Banner from "./components/Banner.jsx";
 
 export default function App() {
   const [page, setPage] = useState("true");
-  const [lista, setLista] = useState([]);
-  const [cidade, setCidade] = useState("");
+  const [dadosPassagem, setDadosPassagem] = useState([]);
+  const [dadosHospedagem, setDadosHospedagem] = useState([]);
 
   return (
     <Page page={page}>
       <Banner />
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage/>
-            }
-          />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/cidades"
             element={
               <CidadesPage
                 setPage={setPage}
-                lista={lista}
-                setLista={setLista}
-                cidade={cidade}
-                setCidade={setCidade}
+                setDadosPassagem={setDadosPassagem}
               />
             }
           />
           <Route
-            path="/hosteis"
-            element={<HoteisPage lista={lista} cidade={cidade} />}
+            path="/hoteis"
+            element={<HoteisPage dadosPassagem={dadosPassagem} setDadosHospedagem={setDadosHospedagem} />}
           />
           <Route
             path="/passagens"
-            element={<PassagensPage cidade={cidade} />}
+            element={<PassagensPage dadosPassagem={dadosPassagem} />}
           />
-          <Route path="/hospedagem" element={<HospedagemPage />}></Route>
+          <Route
+            path="/hospedagem"
+            element={<HospedagemPage dadosHospedagem={dadosHospedagem} />}
+          ></Route>
         </Routes>
       </BrowserRouter>
-      <Footer>
-        <img src={webHouse} alt="Home" />
-        <img src={cidadeIcone} alt="Cidades" />
-        <img src={hotel} alt="Hoteis" />
-        <img src={conta} alt="Finalizar" />
-      </Footer>
     </Page>
   );
 }
 
 const Page = styled.div`
   height: 800px;
-  background-image: url(${(props) => (props.page==="true" ? Home : Cidades)});
+  background-image: url(${(props) => (props.page === "true" ? Home : Cidades)});
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 800px;
@@ -74,14 +63,13 @@ const Page = styled.div`
   align-items: center;
 `;
 
-
-
 const Footer = styled.div`
   display: ${(props) => (props.page ? "none" : "flex")};
   height: 94px;
   position: absolute;
   bottom: 0px;
   width: 100%;
+  max-width: 360px;
   background-color: beige;
   align-items: center;
   justify-content: space-around;
