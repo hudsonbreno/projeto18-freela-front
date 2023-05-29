@@ -8,11 +8,8 @@ import HospedagemPage from "./pages/HospedagemPage.jsx";
 import styled from "styled-components";
 import Home from "./style/Home.PNG";
 import Cidades from "./style/Cidades.PNG";
-import conta from "./style/icone/conta.png";
-import hotel from "./style/icone/hotel.png";
-import webHouse from "./style/icone/web-house.png";
-import cidadeIcone from "./style/icone/cidade.png";
 import Banner from "./components/Banner.jsx";
+import Finalizar from "./pages/FinalizarPage.jsx"
 
 export default function App() {
   const [page, setPage] = useState("true");
@@ -46,6 +43,8 @@ export default function App() {
             path="/hospedagem"
             element={<HospedagemPage dadosHospedagem={dadosHospedagem} />}
           ></Route>
+          <Route path="/finalizar"
+          element={<Finalizar dadosPassagem={dadosPassagem} dadosHospedagem={dadosHospedagem}/>}></Route>
         </Routes>
       </BrowserRouter>
     </Page>
