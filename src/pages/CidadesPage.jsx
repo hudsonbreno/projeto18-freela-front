@@ -2,6 +2,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import beloHorizonte from "../style/cidades/beloHorizonte.PNG";
+import saoPaulo from "../style/cidades/saoPaulo.PNG";
+import fortaleza from "../style/cidades/fortaleza.PNG";
+import rioDeJaneiro from "../style/cidades/rioDeJaneiro.PNG";
+import florianopolis from "../style/cidades/florianopolis.PNG";
+import salvador from "../style/cidades/salvador.PNG";
 
 export default function CidadesPage({
   setPage,
@@ -28,7 +34,6 @@ export default function CidadesPage({
       );
       cards.then((res) => {
         setCardCidade(res.data);
-        console.log(res.data);
       });
     } catch (err) {
       console.log(err.message);
@@ -37,29 +42,29 @@ export default function CidadesPage({
 
   function cardsTodasCidade() {
     try {
-      console.log(`http://localhost:5000/cidades/todas?min=${min}&max=${max}`);
       const promise = axios.get(
         `http://localhost:5000/cidades/todas?min=${min}&max=${max}`
       );
       promise.then((res) => {
         setCardCidade(res.data);
-        console.log(res.data);
       });
     } catch (err) {
       console.log(err.message);
     }
   }
 
-  function cardsCidade() {
+  function cardsCidade(valueCidade) {
     try {
-      if (selecionarCidade === "Todas") {
+      
+      if (valueCidade === "Todas") {
         return cardsTodasCidade();
       }
+      console.log(`http://localhost:5000/cidades/especificar?cidadeNome=${valueCidade}&min=${min}&max=${max}`)
       const promise = axios.get(
-        `http://localhost:5000/cidades/especificar?cidadeNome=${selecionarCidade}&min=${min}&max=${max}`
+        `http://localhost:5000/cidades/especificar?cidadeNome=${valueCidade}&min=${min}&max=${max}`
       );
       promise.then((res) => {
-        console.log(res.data);
+        setCardCidade(res.data);
       });
     } catch (err) {
       console.log(err.message);
@@ -67,7 +72,40 @@ export default function CidadesPage({
   }
 
   function salvarOpcao(item) {
-    console.log(item)
+    console.log(item);
+  }
+
+  function imagemCidade(cidade) {
+    switch (cidade) {
+      case "São Paulo":
+        return saoPaulo;
+      case "Rio de Janeiro":
+        return rioDeJaneiro;
+      case "Fortaleza":
+        return fortaleza;
+      case "Florianópolis":
+        return florianopolis;
+      case "Belo Horizonte":
+        return beloHorizonte;
+      case "Salvador":
+        return salvador;
+
+      default:
+        return "imagem ";
+    }
+  }
+
+  function transformarHora(horario) {
+    const dataHora = new Date(horario);
+
+    const horas = ("0" + dataHora.getHours()).slice(-2);
+    const minutos = ("0" + dataHora.getMinutes()).slice(-2);
+
+    const dia = ("0" + dataHora.getDate()).slice(-2);
+    const mes = ("0" + (dataHora.getMonth() + 1)).slice(-2);
+    const ano = dataHora.getFullYear().toString().slice(-2);
+
+    return (`${horas}:${minutos} ${dia}/${mes}/${ano}`);
   }
 
   return (
@@ -82,6 +120,7 @@ export default function CidadesPage({
           value={selecionarCidade}
           onChange={(e) => {
             setSelecionarCidade(e.target.value);
+            cardsCidade(e.target.value);
           }}
         >
           {lista === undefined ? (
@@ -152,7 +191,7 @@ export default function CidadesPage({
         <button
           onClick={(e) => {
             e.preventDefault();
-            cardsCidade();
+            cardsCidade(selecionarCidade);
           }}
         >
           Filtar
@@ -163,10 +202,10 @@ export default function CidadesPage({
         {cardCidade.map((item, index) => {
           return (
             <Card key={index}>
-              <Link to="/passagens" >
-                <button value={ item } onClick={()=>salvarOpcao(item)}>
-                  <img src="" />
-                  <h1>{item.horarioPartida}</h1>
+              <Link to="/passagens">
+                <button value={item} onClick={() => salvarOpcao(item)}>
+                  <img src={imagemCidade(item.cidadeDestino)} />
+                  <h1>{transformarHora(item.horarioPartida)}</h1>
                   <h2>{item.preco}</h2>
                   <h1>{item.cidadeOrigem}</h1>
                   <h1>{item.cidadeDestino}</h1>
@@ -256,17 +295,15 @@ const Card = styled.div`
   align-items: center;
   margin-left: 12px;
   width: 124px;
-  height: 159px;
-  background-color: red;
+  height: 227px;
   border-radius: 15px;
   text-align: center;
 
   img {
+    width: 100px;
+    height: 120px;
     margin-top: 5px;
     margin-bottom: 5px;
-
-    width: 80px;
-    height: 70px;
   }
 
   h1 {

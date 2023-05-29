@@ -67,7 +67,7 @@ const Page = styled.div`
   height: 800px;
   background-image: url(${(props) => (props.page==="true" ? Home : Cidades)});
   background-repeat: no-repeat;
-  background-size: 100% 102%;
+  background-size: 100% 100%;
   height: 800px;
   display: flex;
   flex-direction: column;
